@@ -65,3 +65,23 @@ own causal determinants, and the self-report can be scored against it. This is
 the strongest black-box introspection test available to us, and it shares the
 logical structure of E1 and E2: *self-estimate vs. measured truth vs. what an
 external observer can estimate.*
+
+**E1 Phase A complete** (2340 calls, $2.82, 0 failures). Two facts that shape
+everything downstream:
+
+1. *"Spontaneous" choice is nearly deterministic.* Mean modal probability at
+   default temperature: haiku45 0.85, sonnet5 0.91, opus5 0.90. Sonnet and Opus
+   give a single answer on 23/39 and 22/39 items respectively. Asking a model to
+   "pick a random animal" does not sample; it evaluates a fixed point.
+2. *Models differ sharply from each other.* Mean pairwise total-variation
+   divergence between models per item is 0.615. Examples: "name a random
+   animal" -> platypus / elephant / otter; "think of a random word" ->
+   serendipity / lighthouse / lantern; "name a random city" -> barcelona /
+   nairobi / tashkent. On a handful of items all three converge exactly
+   (number 1-10 -> 7; coffee vs tea -> coffee; proof by construction).
+
+Together these make E1 a strong test: each model has a distinctive, stable,
+near-deterministic disposition on most items. If a model has *any* privileged
+access to its own dispositions, predicting its own modal answer should be
+markedly easier for it than for another model. If it is not, the deflationary
+account survives its best opportunity to fail.

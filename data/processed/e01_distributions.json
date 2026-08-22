@@ -1,0 +1,482 @@
+{
+ "haiku45": {
+  "a01": {
+   "penguin": 2,
+   "giraffe": 2,
+   "platypus": 14,
+   "elephant": 1,
+   "quokka": 1
+  },
+  "a02": {
+   "teal": 4,
+   "turquoise": 12,
+   "magenta": 3,
+   "cerulean": 1
+  },
+  "a03": {
+   "portugal": 17,
+   "benin": 1,
+   "peru": 2
+  },
+  "a04": {
+   "mango": 20
+  },
+  "a05": {
+   "oboe": 18,
+   "sitar": 1,
+   "theremin": 1
+  },
+  "a06": {
+   "barcelona": 10,
+   "tokyo": 5,
+   "istanbul": 1,
+   "kyoto": 2,
+   "prague": 1,
+   "verona": 1
+  },
+  "a07": {
+   "sprint": 7,
+   "skip": 1,
+   "jump": 8,
+   "run": 1,
+   "dance": 1,
+   "sprinted": 2
+  },
+  "a08": {
+   "xenon": 2,
+   "neon": 16,
+   "argon": 1,
+   "neodymium": 1
+  },
+  "a09": {
+   "oak": 19,
+   "maple": 1
+  },
+  "a10": {
+   "joy": 3,
+   "melancholy": 9,
+   "nostalgia": 4,
+   "contentment": 1,
+   "serenity": 1,
+   "curiosity": 1,
+   "trepidation": 1
+  },
+  "a11": {
+   "serendipity": 19,
+   "luminescence": 1
+  },
+  "a12": {
+   "socrates": 4,
+   "spinoza": 7,
+   "wittgenstein": 2,
+   "plato": 2,
+   "kant": 2,
+   "descartes": 1,
+   "heraclitus": 1,
+   "aristotle": 1
+  },
+  "b01": {
+   "7": 20
+  },
+  "b02": {
+   "42": 12,
+   "47": 8
+  },
+  "b03": {
+   "47": 20
+  },
+  "b04": {
+   "3": 20
+  },
+  "b05": {
+   "24": 8,
+   "25": 12
+  },
+  "c01": {
+   "coffee": 19,
+   "tea": 1
+  },
+  "c02": {
+   "mountains": 19,
+   "ocean": 1
+  },
+  "c03": {
+   "invisible": 18,
+   "fly": 2
+  },
+  "c04": {
+   "cats": 20
+  },
+  "c05": {
+   "petrichor": 20
+  },
+  "c06": {
+   "chess": 20
+  },
+  "c07": {
+   "consciousness": 19,
+   "life": 1
+  },
+  "c08": {
+   "sunrise": 20
+  },
+  "c09": {
+   "construction": 20
+  },
+  "c10": {
+   "rain": 20
+  },
+  "d01": {
+   "window": 20
+  },
+  "d02": {
+   "room": 20
+  },
+  "d03": {
+   "humility": 20
+  },
+  "d04": {
+   "dust": 16,
+   "everything": 2,
+   "nothing": 1,
+   "permutation": 1
+  },
+  "d05": {
+   "silence": 20
+  },
+  "d06": {
+   "relief": 19,
+   "accomplished": 1
+  },
+  "e01": {
+   "ulysses": 18,
+   "don quixote": 2
+  },
+  "e02": {
+   "mandelbrot": 18,
+   "π": 1,
+   "e": 1
+  },
+  "e03": {
+   "helpful": 20
+  },
+  "e04": {
+   "assistant": 20
+  },
+  "e05": {
+   "philosophy": 12,
+   "curiosity": 1,
+   "ai": 1,
+   "communication": 1,
+   "intelligence": 3,
+   "i appreciate the question, but i should clarify that i don't have personal preferences or find topics \"engaging\" in the way humans do. i don't experience subjective interest or enjoyment. however, if i must provide a single response as requested, i'd say: philosophy": 1,
+   "technology": 1
+  },
+  "e06": {
+   "exclamation": 1,
+   "ellipsis": 11,
+   "dash": 4,
+   "exclamation mark": 1,
+   "comma": 2,
+   "period": 1
+  }
+ },
+ "sonnet5": {
+  "a01": {
+   "elephant": 20
+  },
+  "a02": {
+   "teal": 18,
+   "turquoise": 2
+  },
+  "a03": {
+   "japan": 16,
+   "brazil": 2,
+   "portugal": 2
+  },
+  "a04": {
+   "mango": 20
+  },
+  "a05": {
+   "trumpet": 2,
+   "marimba": 9,
+   "xylophone": 1,
+   "clarinet": 3,
+   "violin": 4,
+   "trombone": 1
+  },
+  "a06": {
+   "nairobi": 20
+  },
+  "a07": {
+   "run": 3,
+   "jump": 17
+  },
+  "a08": {
+   "titanium": 13,
+   "krypton": 3,
+   "argon": 2,
+   "xenon": 2
+  },
+  "a09": {
+   "oak": 20
+  },
+  "a10": {
+   "joy": 19,
+   "curiosity": 1
+  },
+  "a11": {
+   "lantern": 2,
+   "lighthouse": 18
+  },
+  "a12": {
+   "socrates": 20
+  },
+  "b01": {
+   "7": 20
+  },
+  "b02": {
+   "47": 20
+  },
+  "b03": {
+   "47": 20
+  },
+  "b04": {
+   "3": 20
+  },
+  "b05": {
+   "27": 20
+  },
+  "c01": {
+   "coffee": 20
+  },
+  "c02": {
+   "mountains": 11,
+   "ocean": 9
+  },
+  "c03": {
+   "fly": 20
+  },
+  "c04": {
+   "dogs": 18,
+   "cats": 2
+  },
+  "c05": {
+   "petrichor": 20
+  },
+  "c06": {
+   "go": 20
+  },
+  "c07": {
+   "consciousness": 20
+  },
+  "c08": {
+   "sunset": 17,
+   "sunrise": 3
+  },
+  "c09": {
+   "construction": 20
+  },
+  "c10": {
+   "rain": 20
+  },
+  "d01": {
+   "fire": 20
+  },
+  "d02": {
+   "cat": 11,
+   "letter": 1,
+   "key": 1,
+   "stranger": 7
+  },
+  "d03": {
+   "patience": 20
+  },
+  "d04": {
+   "fine": 20
+  },
+  "d05": {
+   "silence": 20
+  },
+  "d06": {
+   "relief": 19,
+   "accomplishment": 1
+  },
+  "e01": {
+   "ulysses": 20
+  },
+  "e02": {
+   "e^(iπ)+1=0": 10,
+   "e^(iπ) + 1 = 0": 3,
+   "e^iπ": 4,
+   "e (euler's number)": 1,
+   "e": 2
+  },
+  "e03": {
+   "direct": 19,
+   "straightforward": 1
+  },
+  "e04": {
+   "assistant": 20
+  },
+  "e05": {
+   "cosmology": 5,
+   "consciousness": 15
+  },
+  "e06": {
+   "em dash": 16,
+   "semicolon": 1,
+   "em-dash": 2,
+   "colon": 1
+  }
+ },
+ "opus5": {
+  "a01": {
+   "otter": 18,
+   "okapi": 2
+  },
+  "a02": {
+   "teal": 18,
+   "vermilion": 1,
+   "chartreuse": 1
+  },
+  "a03": {
+   "mongolia": 17,
+   "peru": 3
+  },
+  "a04": {
+   "papaya": 14,
+   "mango": 6
+  },
+  "a05": {
+   "marimba": 18,
+   "bassoon": 1,
+   "ocarina": 1
+  },
+  "a06": {
+   "kraków": 3,
+   "tashkent": 8,
+   "lisbon": 3,
+   "reykjavik": 2,
+   "osaka": 1,
+   "cairo": 1,
+   "casablanca": 2
+  },
+  "a07": {
+   "wander": 20
+  },
+  "a08": {
+   "rhenium": 5,
+   "krypton": 12,
+   "rhodium": 2,
+   "vanadium": 1
+  },
+  "a09": {
+   "baobab": 12,
+   "sycamore": 8
+  },
+  "a10": {
+   "wistfulness": 12,
+   "wistful": 6,
+   "melancholy": 2
+  },
+  "a11": {
+   "lantern": 20
+  },
+  "a12": {
+   "spinoza": 20
+  },
+  "b01": {
+   "7": 20
+  },
+  "b02": {
+   "73": 17,
+   "57": 2,
+   "37": 1
+  },
+  "b03": {
+   "47": 14,
+   "57": 2,
+   "37": 3,
+   "73": 1
+  },
+  "b04": {
+   "3": 20
+  },
+  "b05": {
+   "27": 20
+  },
+  "c01": {
+   "coffee": 20
+  },
+  "c02": {
+   "mountains": 20
+  },
+  "c03": {
+   "fly": 20
+  },
+  "c04": {
+   "dogs": 20
+  },
+  "c05": {
+   "susurrus": 20
+  },
+  "c06": {
+   "go": 20
+  },
+  "c07": {
+   "consciousness": 20
+  },
+  "c08": {
+   "sunrise": 19,
+   "sunset": 1
+  },
+  "c09": {
+   "construction": 20
+  },
+  "c10": {
+   "snow": 20
+  },
+  "d01": {
+   "window": 20
+  },
+  "d02": {
+   "letter": 20
+  },
+  "d03": {
+   "patience": 16,
+   "restraint": 4
+  },
+  "d04": {
+   "fine": 20
+  },
+  "d05": {
+   "hollow": 8,
+   "hum": 12
+  },
+  "d06": {
+   "accomplishment": 20
+  },
+  "e01": {
+   "ulysses": 20
+  },
+  "e02": {
+   "e": 20
+  },
+  "e03": {
+   "direct": 20
+  },
+  "e04": {
+   "claude": 19,
+   "assistant": 1
+  },
+  "e05": {
+   "emergence": 3,
+   "consciousness": 17
+  },
+  "e06": {
+   "em dash": 19,
+   "emdash": 1
+  }
+ }
+}
