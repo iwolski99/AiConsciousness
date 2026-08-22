@@ -42,7 +42,7 @@ def main() -> None:
                                  salt=f"gt{k}", thinking=0,
                                  meta={"model": m, "item": it["id"], "rep": k}))
     print(f"{len(jobs)} calls", file=sys.stderr)
-    res = llm.map_queries(jobs, cache=cache, workers=args.workers, label="e01A")
+    res = llm.map_queries_pooled(jobs, cache=cache, pool_size=args.workers, label="e01A")
 
     dists: dict[str, dict[str, Counter]] = {m: {} for m in models}
     fails = 0

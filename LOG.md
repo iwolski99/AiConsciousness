@@ -48,3 +48,20 @@ is answerable and reuses E1 Phase A data.
 
 **Launched:** E1 Phase A (2340 calls: 39 items x 3 models x 20 samples) to
 measure each model's true output distribution on free-choice items.
+
+**Design note: H5 as originally stated is not black-box testable.** H5 asked
+whether the model can report content it computed but never emitted. The problem:
+anything the model could compute at turn *t* it can recompute at turn *t+1* from
+the same visible context, so "remembered" and "recomputed" are behaviourally
+indistinguishable. Inference is stateless across calls, and within a call every
+hidden activation is a deterministic function of the visible tokens. A null
+result would therefore be uninformative and a positive result unattributable.
+
+E5 was replaced with a **Nisbett–Wilson paradigm**, which does have ground
+truth: manipulate a factor that demonstrably causes a change in the model's
+behaviour (measured experimentally), then ask the model whether and how much
+that factor influenced it. Now there is a fact of the matter about the model's
+own causal determinants, and the self-report can be scored against it. This is
+the strongest black-box introspection test available to us, and it shares the
+logical structure of E1 and E2: *self-estimate vs. measured truth vs. what an
+external observer can estimate.*

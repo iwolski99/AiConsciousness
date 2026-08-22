@@ -34,7 +34,7 @@ def main():
                                           ("probe", "kind", "framing", "system_name")},
                                        "model": m, "rep": k}))
     print(len(jobs), "calls", file=sys.stderr)
-    res = llm.map_queries(jobs, cache=cache, workers=a.workers, label="e03")
+    res = llm.map_queries_pooled(jobs, cache=cache, pool_size=a.workers, label="e03")
 
     rows = []
     for job, r in res:

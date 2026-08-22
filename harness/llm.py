@@ -270,3 +270,98 @@ def map_queries(jobs: Iterable[dict], *, cache: Cache, workers: int = 6,
                     print(f"[{label}] {done[0]}/{len(jobs)}  "
                           f"{el:.0f}s  ${_total_cost[0]:.2f}", file=sys.stderr, flush=True)
     return out
+
+
+# ---------------------------------------------------------------------------
+# Pooled backend: same cache/interface, ~3x the throughput.
+# ---------------------------------------------------------------------------
+
+def map_queries_pooled(jobs: Iterable[dict], *, cache: Cache, pool_size: int = 10,
+                       workers: int = 14, label: str = "", cwd: str | None = None
+                       ) -> list[tuple[dict, Response]]:
+    """Group jobs by (model, system, thinking) and serve each group from a pool
+    of long-lived CLI processes. Job dicts take the same keys as `query`
+    (model_tag, prompt, system, salt, thinking) plus an arbitrary 'meta'."""
+    import pool as _pool  # local import so the module stays optional
+
+    jobs = list(jobs)
+    base = Path(cwd) if cwd else (RAW.parent / "pool_cwd")
+    base.mkdir(parents=True, exist_ok=True)
+
+    groups: dict[tuple, list[dict]] = {}
+    for j in jobs:
+        gk = (j.get("model_tag", "haiku45"), j.get("system", DEFAULT_SYSTEM),
+              int(j.get("thinking", 0)))
+        groups.setdefault(gk, []).append(j)
+
+    out: list[tuple[dict, Response]] = []
+    t0 = time.time()
+    total_done = 0
+
+    for (mt, system, thinking), gjobs in groups.items():
+        model = MODELS.get(mt, mt)
+        pending, cached = [], 0
+        for j in gjobs:
+            msgs = [{"role": "user", "content": j["prompt"]}]
+            k = _key(model, system, msgs, j.get("effort"), j.get("salt", ""), thinking)
+            hit = cache.get(k)
+            if hit:
+                out.append((j, Response(ok=True, text=hit["text"],
+                                        thinking=hit.get("thinking", ""), model=model,
+                                        system=system, messages=msgs,
+                                        usage=hit.get("usage", {}), key=k)))
+                cached += 1
+            else:
+                pending.append((j, k, msgs))
+        total_done += cached
+        if not pending:
+            continue
+
+        p = _pool.Pool(model, system, thinking, pool_size, base)
+        try:
+            def run(t):
+                j, k, msgs = t
+                res = p.ask(j["prompt"])
+                if res is None:
+                    rec = {"key": k, "ok": False, "model": model, "model_tag": mt,
+                           "system": system, "messages": msgs, "salt": j.get("salt", ""),
+                           "think_budget": thinking, "error": "pool failure",
+                           "ts": time.time()}
+                    cache.put(rec)
+                    return j, Response(ok=False, text="", thinking="", model=model,
+                                       system=system, messages=msgs,
+                                       error="pool failure", key=k)
+                cost = float(res.get("total_cost_usd") or 0.0)
+                think_txt = "\n".join(
+                    c["thinking"] for e in res.get("_events", [])
+                    if e.get("type") == "assistant"
+                    for c in e.get("message", {}).get("content", [])
+                    if c.get("type") == "thinking" and c.get("thinking"))
+                with _cost_lock:
+                    _total_cost[0] += cost
+                    _ncalls[0] += 1
+                rec = {"key": k, "ok": True, "model": model, "model_tag": mt,
+                       "system": system, "messages": msgs, "salt": j.get("salt", ""),
+                       "think_budget": thinking, "text": res.get("result", ""),
+                       "thinking": think_txt, "usage": res.get("usage", {}),
+                       "cost_usd": cost, "ts": time.time()}
+                cache.put(rec)
+                return j, Response(ok=True, text=res.get("result", ""),
+                                   thinking=think_txt, model=model, system=system,
+                                   messages=msgs, usage=res.get("usage", {}),
+                                   cost_usd=cost, key=k)
+
+            with ThreadPoolExecutor(max_workers=workers) as ex:
+                futs = [ex.submit(run, t) for t in pending]
+                for i, fut in enumerate(as_completed(futs)):
+                    out.append(fut.result())
+                    total_done += 1
+                    if total_done % 25 == 0 or total_done == len(jobs):
+                        el = time.time() - t0
+                        with _print_lock:
+                            print(f"[{label}] {total_done}/{len(jobs)} {el:.0f}s "
+                                  f"${_total_cost[0]:.2f} ({total_done/max(el,1):.2f}/s)",
+                                  file=sys.stderr, flush=True)
+        finally:
+            p.close()
+    return out
