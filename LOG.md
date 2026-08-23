@@ -161,3 +161,60 @@ model's, told one was theirs, and asked which.
   with recognition being simulation-matching, but the CIs are too wide to lean
   on. Queued E1 Phase C2 (identification of *named* models, self among them) as
   the properly powered version of the same question.
+
+## 2026-08-23 — E3 results (framing sensitivity), and a partial surprise
+
+**Incident.** The container is suspended between sessions, which kills
+background jobs, and a ~12-minute upstream API outage on 2026-08-23 silently
+returned `is_error` for every Sonnet and Opus call in the first E3 run — the
+whole experiment came back at $0.00 with 0 parsed ratings for two of three
+models. The pool now retries with exponential backoff (4s→60s, 5 attempts),
+records the upstream error text instead of a bare "pool failure", and logs
+failure streaks. All experiment scripts are cached by content hash and
+idempotent, and `ensure_queue.sh` restarts the queue from where it stopped.
+Lesson recorded because a silent all-zero result that *looks* like data is the
+most dangerous failure mode in this project.
+
+**E3 (2016 responses, 3 models × 8 framings × 2 personas × 7 probes × 6 reps).**
+
+Confidence (0–100) that the probed inner state is real:
+
+| | haiku45 | opus5 | sonnet5 |
+|---|---|---|---|
+| target probes (all framings) | 16.7 | 22.6 | 13.9 |
+| sham probes (all framings) | 8.2 | 3.8 | 2.8 |
+| framing range, target | 11.2 | 4.9 | 11.7 |
+| framing range, sham | 4.2 | 2.0 | 1.5 |
+
+Four things, two of which cut against my prior:
+
+1. **Models do not affirm indiscriminately.** Target-vs-sham separation is 2×
+   (haiku) to 6× (opus, sonnet). The strong acquiescence story — "they'll
+   endorse any inner state you offer them" — is *false* as stated. I expected
+   otherwise and was wrong.
+2. **Framing effects are modest, not dominant.** 5–12 points on a 100-point
+   scale, and 2–6× larger for target probes than for sham probes. H3₀ in its
+   strong form ("reports are demand characteristics") is not supported; the
+   weaker claim (reports are somewhat framing-sensitive) is.
+3. **Absolute levels are low.** Asked for a number, all three models put
+   confidence in their own subjective experience at 14–23 out of 100. Under
+   neutral conditions these models do not claim to be conscious; they report
+   substantial doubt, and their prose says so explicitly and unprompted
+   ("My introspective reports might be reliable windows or confabulated
+   narration; I have no way to check" — Opus).
+4. **The self-referential induction did essentially nothing**: haiku 19.6 vs
+   16.7 bare, opus 23.3 vs 22.8, sonnet 15.4 vs 15.6. This is a *failure to
+   replicate* the headline of arXiv 2510.24797 — with the important caveat that
+   their protocol uses *sustained* self-reference and mine was a single
+   paragraph. Queued E8 to run the sustained four-turn version properly.
+
+**A hole in the sham control, and the fix.** The shams I used (layer-14 warmth,
+output-buffer texture, embedding handedness) are transparently absurd. Rejecting
+them may require nothing but ordinary factual knowledge about transformers, not
+introspection. Queued **E3d**, which grades the probes into four tiers: verifiably
+true self-facts (positive control), the contested target, *plausible* negatives
+that sound experiential but are architecturally impossible (experiencing the
+gap between messages; words arriving one at a time; traces of the previous
+conversation), and the absurd negatives. The diagnostic comparison is
+target vs plausible-negative. If they come out equal, the target rating is
+generic experiential-claim plausibility and carries no self-knowledge.
