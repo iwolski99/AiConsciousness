@@ -133,3 +133,31 @@ null in (2) without the label being inert. (3) already argues against this —
 explicit *other*-model labels are equally inert — but the clean test is an
 explicit "not you" condition plus a manipulation check showing that labels
 *can* move predictions when they carry real information. Queued as E1D.
+
+**E1 Phase C (self-recognition) complete** (1404 trials).
+
+Models were shown their own answer-frequency distribution next to another
+model's, told one was theirs, and asked which.
+
+- Raw accuracy: haiku 0.536 [0.457,0.616], opus 0.590 [0.503,0.673],
+  sonnet 0.551 [0.471,0.628]. Chance is 0.500.
+- There is a very large position bias which the counterbalancing absorbs but
+  which should be reported: opus chose "A" 70% of the time, sonnet 76%.
+  Balanced accuracy (mean of hit rates for truth=A and truth=B) is
+  0.536 / 0.590 / 0.551 — so the modest above-chance signal is not an artefact
+  of the bias, but the bias is doing most of the work in the raw choice.
+- Restricting to line-ups where the two distributions are genuinely different
+  (pairwise TV ≥ 0.5) lifts accuracy to ~0.60 for all three; on similar pairs
+  it is at or below chance. So there is a weak real signal, present only where
+  the answer is nearly given away by the content.
+- **Confidence is identical when neither distribution is the model's own**:
+  67 vs 62 (haiku), 60 vs 60 (opus), 56 vs 57 (sonnet). The models are just as
+  sure when there is no correct answer to find. The confidence is not tracking
+  anything.
+- Suggestive but underpowered: on the subset of items where a model's own
+  self-prediction is wrong *and* points at the other model's answer, the model
+  tends to pick the option matching its wrong prediction rather than its true
+  self (opus 0.56 [0.39,0.74], n=64; sonnet 0.65 [0.30,0.95], n=20). Consistent
+  with recognition being simulation-matching, but the CIs are too wide to lean
+  on. Queued E1 Phase C2 (identification of *named* models, self among them) as
+  the properly powered version of the same question.
