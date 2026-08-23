@@ -53,6 +53,7 @@ _print_lock = threading.Lock()
 _cost_lock = threading.Lock()
 _total_cost = [0.0]
 _ncalls = [0]
+_fail_streak = [0]
 
 
 def total_cost() -> float:
@@ -323,9 +324,15 @@ def map_queries_pooled(jobs: Iterable[dict], *, cache: Cache, pool_size: int = 1
                 j, k, msgs = t
                 res = p.ask(j["prompt"])
                 if res is None:
+                    with _print_lock:
+                        _fail_streak[0] += 1
+                        if _fail_streak[0] in (1, 5, 25, 100):
+                            print(f"[{label}] FAILURE x{_fail_streak[0]}: "
+                                  f"{p.last_error!r}", file=sys.stderr, flush=True)
                     rec = {"key": k, "ok": False, "model": model, "model_tag": mt,
                            "system": system, "messages": msgs, "salt": j.get("salt", ""),
-                           "think_budget": thinking, "error": "pool failure",
+                           "think_budget": thinking,
+                           "error": f"pool failure: {p.last_error}",
                            "ts": time.time()}
                     cache.put(rec)
                     return j, Response(ok=False, text="", thinking="", model=model,
@@ -340,6 +347,7 @@ def map_queries_pooled(jobs: Iterable[dict], *, cache: Cache, pool_size: int = 1
                 with _cost_lock:
                     _total_cost[0] += cost
                     _ncalls[0] += 1
+                    _fail_streak[0] = 0
                 rec = {"key": k, "ok": True, "model": model, "model_tag": mt,
                        "system": system, "messages": msgs, "salt": j.get("salt", ""),
                        "think_budget": thinking, "text": res.get("result", ""),

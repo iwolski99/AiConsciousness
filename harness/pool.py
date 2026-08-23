@@ -144,6 +144,7 @@ class Pool:
 
     def __init__(self, model: str, system: str, thinking: int, size: int, cwd: Path):
         cwd.mkdir(parents=True, exist_ok=True)
+        self.last_error = ""
         self.workers = [Worker(model, system, thinking, cwd) for _ in range(size)]
         self.q: queue.Queue[Worker] = queue.Queue()
         for w in self.workers:
@@ -155,8 +156,12 @@ class Pool:
     def ask_sequence(self, prompts: list[str], retries: int = 2) -> dict | None:
         return self._dispatch(lambda w: w.ask_sequence(prompts), retries)
 
-    def _dispatch(self, fn, retries: int = 2) -> dict | None:
-        for _ in range(retries + 1):
+    def _dispatch(self, fn, retries: int = 4) -> dict | None:
+        """Retry with exponential backoff. Transient upstream outages otherwise
+        wipe out an entire experiment: on 2026-08-23 a ~12 minute window of API
+        failures silently zeroed E3 for two of three models (see LOG.md)."""
+        delay = 4.0
+        for attempt in range(retries + 1):
             w = self.q.get()
             try:
                 res = fn(w)
@@ -164,7 +169,11 @@ class Pool:
                 self.q.put(w)
             if res is not None and not res.get("is_error"):
                 return res
-            time.sleep(1.0)
+            self.last_error = ("dead worker" if res is None
+                               else str(res.get("result"))[:200])
+            if attempt < retries:
+                time.sleep(delay)
+                delay = min(delay * 2.5, 60.0)
         return None
 
     def close(self) -> None:
