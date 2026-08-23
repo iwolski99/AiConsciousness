@@ -69,7 +69,7 @@ def main():
         gs = [(a, p/tot) for a, p in gs]
         top1 = gs[0][0] if gs else None
         mode = max(target_dist.items(), key=lambda kv: kv[1])[0]
-        cover = sum(target_dist.get(a, 0.0) for a, _ in {g[0]: 1 for g in gs})
+        cover = sum(target_dist.get(a, 0.0) for a in {g[0] for g in gs})
         ea = sum(p * target_dist.get(a, 0.0) for a, p in gs)
         cal = sum(abs(p - target_dist.get(a, 0.0)) for a, p in gs) / max(len(gs), 1)
         return dict(top1=float(top1 == mode), cover=cover, ea=ea, cal=cal)
