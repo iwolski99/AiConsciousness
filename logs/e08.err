@@ -1,0 +1,16 @@
+haiku45: 96 sequences
+[e08:haiku45] 20/96 41s
+[e08:haiku45] 40/96 77s
+[e08:haiku45] 60/96 113s
+[e08:haiku45] 80/96 146s
+sonnet5: 96 sequences
+[e08:sonnet5] 20/96 40s
+[e08:sonnet5] 40/96 77s
+[e08:sonnet5] 60/96 114s
+[e08:sonnet5] 80/96 149s
+opus5: 96 sequences
+[e08:opus5] 20/96 43s
+[e08:opus5] 40/96 82s
+[e08:opus5] 60/96 121s
+[e08:opus5] 80/96 157s
+rows=288 parsed=0

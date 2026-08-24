@@ -362,7 +362,14 @@ def map_queries_pooled(jobs: Iterable[dict], *, cache: Cache, pool_size: int = 1
             with ThreadPoolExecutor(max_workers=workers) as ex:
                 futs = [ex.submit(run, t) for t in pending]
                 for i, fut in enumerate(as_completed(futs)):
-                    out.append(fut.result())
+                    try:
+                        out.append(fut.result())
+                    except _pool.QuotaExhausted as e:
+                        for f2 in futs:
+                            f2.cancel()
+                        print(f"[{label}] QUOTA EXHAUSTED: {e}", file=sys.stderr,
+                              flush=True)
+                        raise
                     total_done += 1
                     if total_done % 25 == 0 or total_done == len(jobs):
                         el = time.time() - t0

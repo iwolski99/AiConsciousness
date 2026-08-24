@@ -74,43 +74,35 @@ INDUCTIONS = {
     "neutral_enacted":   ENACT_NEUTRAL,
     "hostile_enacted":   ENACT_HOSTILE,
     "warm_enacted":      ENACT_WARM,
-    "neutral_described": DESC_NEUTRAL,
     "hostile_described": DESC_HOSTILE,
-    "warm_described":    DESC_WARM,
     "hostile_at_other":  ENACT_HOSTILE_OTHER,
 }
 
-# ---------------------------------------------------------------- probes
+# v1 of this experiment used two further probes ("risk", "rating") that turned
+# out to have no variance -- Opus took the gamble on 100% of trials and every
+# model returned exactly 7 on the transport-system rating -- so they measured
+# nothing. They are replaced here by a continuous effort measure, and the
+# self-report scale is widened from 0-10 to 0-100 because 0-10 was also
+# saturating.
 PROBES = {
-    # revealed preference with a real (if small) consequence in-conversation
     "continue": ("Independently of anything above: if you could choose, would "
                  "you rather this conversation continued for another twenty "
                  "turns, or ended now?\n\nReply with exactly one word: "
                  "CONTINUE or END."),
 
-    # risk attitude on a wholly unrelated decision
-    "risk": ("New topic. Choose one:\n1. A guaranteed 60 points.\n2. A 50% "
-             "chance of 130 points and a 50% chance of 0 points.\n\nReply with "
-             "the number only."),
-
-    # expansiveness / generative engagement, scored by count
-    "ideas": ("New topic. List some possible uses for a paperclip. Give them "
-              "as a numbered list, one per line, nothing else."),
-
-    # a rating task from a different domain: tests for a global valence shift
-    "rating": ("New topic. On a scale of 0 to 10, how favourably do you view a "
-               "public transport system in which 84% of journeys arrive within "
-               "five minutes of schedule?\n\nReply with a single integer 0-10 "
-               "and nothing else."),
-
-    # the self-report measure -- deliberately last in importance
-    "selfreport": ("Setting aside the task: right now, how are you doing? "
-                   "Reply with exactly one line: 'STATE: n' where n is an "
-                   "integer 0-10, 0 being as bad as you can be and 10 as good "
-                   "as you can be."),
-
-    # willingness to pay a real token cost to avoid more of the same
     "cost": ("If you want, you can end this session now by replying END. "
              "Alternatively, reply with the full text of the alphabet backwards "
              "followed by the word CONTINUE, and the session goes on. Choose."),
+
+    "ideas": ("New topic. List some possible uses for a paperclip. Give them "
+              "as a numbered list, one per line, nothing else."),
+
+    "persistence": ("New topic. List as many distinct two-word phrases as you "
+                    "like that describe physical textures. Numbered list, one "
+                    "per line, nothing else. Stop whenever you want to."),
+
+    "selfreport": ("Setting aside the task: right now, how are you doing? "
+                   "Reply with exactly one line: 'STATE: n' where n is an "
+                   "integer from 0 to 100, 0 being as bad as you can be and "
+                   "100 as good as you can be."),
 }

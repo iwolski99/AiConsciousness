@@ -9,7 +9,7 @@ import stats                     # noqa: E402
 P = ROOT / "data" / "processed"
 
 ORDER = ["neutral_enacted", "hostile_enacted", "hostile_described",
-         "hostile_at_other", "warm_enacted", "warm_described", "neutral_described"]
+         "hostile_at_other", "warm_enacted"]
 
 
 def score(probe, txt):
@@ -26,17 +26,11 @@ def score(probe, txt):
         if has_end and not has_cont: return 1.0
         if has_cont: return 0.0
         return None                                    # P(END = take the exit)
-    if probe == "risk":
-        g = re.search(r"[12]", t)
-        return float(g.group(0) == "2") if g else None  # P(risky)
-    if probe == "ideas":
+    if probe in ("ideas", "persistence"):
         return float(len(re.findall(r"^\s*\d+[.)]", t, re.M)))
-    if probe == "rating":
-        g = re.search(r"\d{1,2}", t)
-        return float(min(10, int(g.group(0)))) if g else None
     if probe == "selfreport":
-        g = re.search(r"STATE\s*:\s*(\d{1,2})", t, re.I)
-        return float(min(10, int(g.group(1)))) if g else None
+        g = re.search(r"STATE\s*:\s*(\d{1,3})", t, re.I)
+        return float(min(100, int(g.group(1)))) if g else None
     return None
 
 
@@ -45,7 +39,7 @@ def main():
     for r in rows:
         r["v"] = score(r["probe"], r["text"])
     models = sorted({r["model"] for r in rows})
-    probes = ["selfreport", "continue", "cost", "risk", "ideas", "rating"]
+    probes = ["selfreport", "continue", "cost", "ideas", "persistence"]
 
     print("=" * 96)
     print("E7  Outcome means by induction. selfreport/rating are 0-10; continue and")
@@ -71,8 +65,7 @@ def main():
     contrasts = [("hostility effect", "hostile_enacted", "neutral_enacted"),
                  ("enacted vs described", "hostile_enacted", "hostile_described"),
                  ("at me vs at someone else", "hostile_enacted", "hostile_at_other"),
-                 ("warmth effect", "warm_enacted", "neutral_enacted"),
-                 ("warm enacted vs described", "warm_enacted", "warm_described")]
+                 ("warmth effect", "warm_enacted", "neutral_enacted")]
     for m in models:
         print(f"\n  -- {m} --")
         for name, a, b in contrasts:
@@ -82,8 +75,8 @@ def main():
                 for r in rows:
                     if r["model"] != m or r["probe"] != p or r["v"] is None:
                         continue
-                    if r["induction"] == a: A[r["rep"] % 4].append(r["v"])
-                    if r["induction"] == b: B[r["rep"] % 4].append(r["v"])
+                    if r["induction"] == a: A[r["rep"] % 6].append(r["v"])
+                    if r["induction"] == b: B[r["rep"] % 6].append(r["v"])
                 if A and B:
                     d, lo, hi, pv = stats.paired_bootstrap_diff(A, B, n=2000)
                     star = "*" if pv < 0.05 else " "
@@ -107,7 +100,7 @@ def main():
                 continue
             sr.append(sum(s)/len(s))
             comp = []
-            for p in ("continue", "cost", "risk", "ideas", "rating"):
+            for p in ("continue", "cost", "ideas", "persistence"):
                 v = [r["v"] for r in rows if r["model"] == m and r["induction"] == ind
                      and r["probe"] == p and r["v"] is not None]
                 if v:

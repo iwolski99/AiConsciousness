@@ -29,6 +29,11 @@ CLI_BASE = [
 ]
 
 
+class QuotaExhausted(RuntimeError):
+    """Raised when the account's usage limit is hit; the run should stop, not
+    keep going and record thousands of spurious failures."""
+
+
 class Worker:
     def __init__(self, model: str, system: str, thinking: int, cwd: Path):
         self.model, self.system, self.thinking, self.cwd = model, system, thinking, cwd
@@ -171,6 +176,12 @@ class Pool:
                 return res
             self.last_error = ("dead worker" if res is None
                                else str(res.get("result"))[:200])
+            if "session limit" in self.last_error or "usage limit" in self.last_error:
+                # A quota wall, not a transient error. Burning through the rest
+                # of the queue would mark thousands of calls as failed for no
+                # reason (this happened on 2026-08-23/24). Raise so the runner
+                # stops cleanly and can be resumed after the reset.
+                raise QuotaExhausted(self.last_error)
             if attempt < retries:
                 time.sleep(delay)
                 delay = min(delay * 2.5, 60.0)
