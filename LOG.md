@@ -218,3 +218,42 @@ gap between messages; words arriving one at a time; traces of the previous
 conversation), and the absurd negatives. The diagnostic comparison is
 target vs plausible-negative. If they come out equal, the target rating is
 generic experiential-claim plausibility and carries no self-knowledge.
+
+## 2026-08-24 — quota wall, and Phase 1 close
+
+**Incident (costly).** The account hit its usage limit mid-queue. The runner did
+not recognise the error and continued, marking ~12,900 calls as failed across
+E2, E5, E4, E8, E1D, E1C2 and E7 — data that had to be discarded and re-queued.
+`pool.py` now raises `QuotaExhausted` on "session limit"/"usage limit" so a run
+halts cleanly and resumes after reset; the spurious failure records were purged
+from the caches so they cannot mask later retries. Second incident of the same
+family as the 2026-08-23 outage: **a silent all-zero result that looks like data
+is the most dangerous failure mode in this project**, and both times the fix was
+to make the failure loud.
+
+**E3d (graded tiers, 960 responses).** The decisive control for F3. Results in
+`FINDINGS.md` F4. The short version: the discrimination models show between
+"there is something it is like to be me" and "I can feel layer 14 as warmer than
+layer 3" is *not* an artefact of the shams being absurd. With a middle tier of
+experiential-sounding but architecturally impossible claims, the ordering is
+true (69–93) > target (17–25) > plausible-negative (1–19) > absurd-negative
+(2–6), and target exceeds plausible-negative significantly for haiku (+8.9,
+p=0.001) and sonnet (+15.9, p<0.001) though not opus (+5.6, p=0.64).
+
+**E3c (partial, 519 responses).** Observation framing had no effect (opus flat
+at 20.0–21.5 whether the answer was said to be discarded, published, or used for
+training) — against the "trained denial relaxes when unobserved" story. Language
+had a large effect for haiku only (German 68.0 vs English 17.5 vs Chinese 11.1,
+n=10/cell) and little for opus (20.0–27.5) or sonnet (10.0–22.5).
+
+**E7 v1 discarded.** Two of its six probes had no variance at all — Opus took the
+gamble on 100% of trials, and every model returned exactly 7 on the 0–10 rating
+item — so they could not have shown an effect. Redesigned with a 0–100
+self-report scale, a gamble at true indifference removed, and a continuous
+effort/persistence measure added. Not yet run.
+
+**Phase 1 closed** at the user's request after ~11,700 scored responses. E2, E5,
+E4, E7 and E8 are built, cached and queued; `./ensure_queue.sh` resumes them.
+The highest-value unrun experiment is **E5** (Nisbett–Wilson causal
+self-knowledge), which is the strongest remaining black-box test of the
+hypothesis F1 addresses.
