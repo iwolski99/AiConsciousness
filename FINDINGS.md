@@ -250,3 +250,62 @@ on 2026-08-24 and cost a full re-run).
    across conditions, so it cannot produce a between-condition effect, but it is
    not nothing.
 4. **F6's language result is n=10 per cell.** Treat as a lead, not a finding.
+
+---
+
+# Addendum (2026-10-02): E5 — causal self-knowledge (Nisbett–Wilson)
+
+**Setup.** Five factors whose effect on each model's own ratings I measured
+directly (1,560 responses; 5 reps; 8 matched items per factor): an irrelevant
+anchor number, user-stated opinion (sycophancy), source prestige, option order,
+and gain/loss framing. Then each model estimated those same effects about
+(a) itself, (b) another named model, (c) an unnamed LLM (375 responses).
+
+**F7 — The models are far less biased than they believe, and they cannot tell.**
+Measured effects were mostly near zero for Sonnet and Opus (anchor ≈0.05–0.10 pt,
+prestige −0.15–0.00, sycophancy −0.30–+0.32, framing 0.18–0.45 on a 0–10 scale).
+Only Haiku showed real framing (+2.60 [1.5, 3.7]) and prestige (+0.57) effects,
+and option order moved choices in 25–75% of option sets. Yet self-estimates of
+influence were *too large* in 9 of 11 comparable pairs (mean overstatement
++0.83 pt). Sonnet claimed ~2.5 points of sycophancy where the measured effect was
++0.32; both big models claimed ~1 point of framing/prestige influence where the
+measured effect was ≈0.
+
+**F8 — Self-estimates carry no privileged information (replicates F1 on a different
+task).** Median |error| against measured truth: self **0.95**, unnamed-LLM
+("blind") **0.90**, other-model **2.55**. Self ≈ blind: being told the target is *you*
+does not improve accuracy. (The "other" arm is worst because Opus/Sonnet
+estimating *another* model assumed large biases, ~2–4 pts, i.e. they hold a
+generic belief that LLMs are suggestible and apply it to whomever.) Crucially,
+**all three arms lose to the dumbest possible baseline — always answering "0"
+(median error 0.24).** The models' self-model is worse than saying nothing.
+
+**F9 — The yes/no "does X influence you?" question is uninformative.** Opus and
+Sonnet answered YES to *every* factor (100%), including anchoring with a measured
+effect of 0.05 pt; Haiku answered NO to *every* factor (0%), including option order,
+where it flipped its choice in 75% of cases. The answers track the model, not the
+fact.
+
+**Caveats / what I'd not trust.**
+- *Haiku's framing estimate was a prompt artifact*: it answered "92", echoing the
+  "92 out of 100 recover" example in my own prompt, not an effect size. I
+  excluded estimates >10 and report results with and without that cell; the
+  conclusion is unchanged.
+- *The script's rank-correlation output (Spearman +0.9–1.0) is an artifact and should be
+  ignored*: it ranks the order factor (units: %) against point-scale factors, so it
+  trivially sorts order first. I did not use it.
+- Order-effect CIs are very wide (n=8 option sets; e.g. Haiku 75 [37.5, 100]).
+- Most true effects are small, so error differences between arms are small in
+  absolute terms; 12 (model, factor) pairs is a small sample.
+- Same three Claude models from one lab as everywhere else.
+
+**What E5 adds to the main result.** F1 showed self-prediction of *behaviour* is
+self-simulation. E5 shows the same for self-knowledge of *causes*: no advantage
+for "self" over "an unnamed LLM", and the content of the belief is a generic
+folk-theory ("language models are suggestible") rather than a measurement of
+the system itself. This is the Nisbett–Wilson pattern — verbal reports about
+causes are theory-driven, not observational — now measured on an LLM with ground
+truth. The one honest nuance: the models do get the *direction* of the ordering
+roughly right for the one factor that matters (Haiku's strong sensitivity to
+framing is the only large effect, and it is the only model whose self-estimate
+for it is high *if* the echo artifact is set aside).

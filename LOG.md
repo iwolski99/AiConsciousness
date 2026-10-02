@@ -257,3 +257,10 @@ E4, E7 and E8 are built, cached and queued; `./ensure_queue.sh` resumes them.
 The highest-value unrun experiment is **E5** (Nisbett–Wilson causal
 self-knowledge), which is the strongest remaining black-box test of the
 hypothesis F1 addresses.
+
+## 2026-10-02 — E5 run (Nisbett–Wilson), reps=5 to conserve quota
+1,560 behavioural + 375 introspection responses, ~$1.5, no quota errors. Two analysis
+bugs caught before reporting: (1) Haiku's "frame" estimate of 39 pts was the model
+echoing "92" from my prompt example; (2) analyse.py's Spearman mixes % and point units and
+is meaningless. Robust rescoring (|est|≤10, with/without echo cell) in FINDINGS.md F7–F9.
+Main result: self ≈ blind; both lose to an "always 0" baseline.
